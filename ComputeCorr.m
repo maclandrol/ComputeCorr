@@ -240,7 +240,7 @@ try
     intensity_list = getDensity(handles);
     
     nclass = str2double(get(handles.nclass , 'String'));
-    values = intensity_list(:,end);
+    values = intensity_list(:,end-1);
     cluster = ones(size(values));
     no_err = true;
     if isnan(nclass)
@@ -269,7 +269,7 @@ try
             trans_infos(i, 1:2) = sum(handles.rna((handles.rna(:,4)==int_val & handles.rna(:,5)>0), 5:6), 1);
             trans_infos(i,3) = nnz(handles.rna(:,4)==int_val);
         end
-        intensity_list(:, end+1:end+2) = trans_infos;
+        intensity_list(:, end+1:end+3) = trans_infos;
         
         for j=1:nclass
             cluster_list(j, 3) = nnz(intensity_list(:, 8)==j);
@@ -407,7 +407,7 @@ Ha(NC) = ha;
 SR = [Sil; DB; CH; KL; Ha];
 kfind = [20 20 20 20 2 1 2 2 5 2 2]; 
 FR = {'Silhouette (Sil) ==> Highest', 'Davies-Bouldin (DB) ==> Lowest', 'Calinski-Harabasz (CH) ==> Highest', 'Krzanowski-Lai (KL) ==> Highest', ...
-     'Hartigan ==> ??' };
+     'Hartigan' };
 
 valid_index_plot(SR(:,NC), NC, kfind, FR);
 
